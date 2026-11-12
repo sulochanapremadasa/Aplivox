@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Shield,
   ArrowLeft,
@@ -7,13 +7,8 @@ import {
   Printer,
   Mail,
   Search,
-  ExternalLink,
-  ChevronRight,
   Lock,
-  FileText,
-  Smartphone,
-  Eye,
-  Download,
+  CreditCard,
 } from 'lucide-react';
 import {
   MobileApp,
@@ -24,32 +19,21 @@ import {
 
 interface PrivacyPolicyViewerProps {
   selectedAppId: string;
-  onSelectAppId: (appId: string) => void;
   onClose?: () => void;
-  isStandalonePage?: boolean;
 }
 
 export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
   selectedAppId,
-  onSelectAppId,
   onClose,
-  isStandalonePage = false,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [copiedLink, setCopiedLink] = useState(false);
-  const [activeTab, setActiveTab] = useState<string>(selectedAppId || 'isounds');
+  const [copiedUrl, setCopiedUrl] = useState(false);
 
-  useEffect(() => {
-    if (selectedAppId) {
-      setActiveTab(selectedAppId);
-    }
-  }, [selectedAppId]);
-
-  // Determine which policy is being viewed
+  // Determine which app policy is being viewed
   let currentPolicy: AppPrivacyPolicy;
-  let currentApp: MobileApp | undefined = APPS_DATA.find((a) => a.id === activeTab);
+  let currentApp: MobileApp | undefined = APPS_DATA.find((a) => a.id === selectedAppId);
 
-  if (activeTab === 'aplivox') {
+  if (selectedAppId === 'aplivox') {
     currentPolicy = CORPORATE_PRIVACY_POLICY;
   } else if (currentApp) {
     currentPolicy = currentApp.privacyPolicy;
@@ -58,11 +42,10 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
     currentPolicy = APPS_DATA[0].privacyPolicy;
   }
 
-  const handleCopyLink = () => {
-    const url = `${window.location.origin}${window.location.pathname}#privacy-${activeTab}`;
-    navigator.clipboard.writeText(url);
-    setCopiedLink(true);
-    setTimeout(() => setCopiedLink(false), 2500);
+  const handleCopyUrl = () => {
+    navigator.clipboard.writeText(currentPolicy.canonicalUrl);
+    setCopiedUrl(true);
+    setTimeout(() => setCopiedUrl(false), 2500);
   };
 
   const handlePrint = () => {
@@ -79,35 +62,40 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
   });
 
   return (
-    <div id="privacy-section" className="py-12 lg:py-20 bg-slate-950 text-slate-100 min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div id="privacy-section" className="py-10 lg:py-16 bg-slate-950 text-slate-100 min-h-screen">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Top Control Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            {onClose && (
-              <button
-                onClick={onClose}
-                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 rounded-lg border border-slate-800 transition-colors"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Back to Showcase</span>
-              </button>
-            )}
+            <a
+              href="/"
+              onClick={(e) => {
+                if (onClose) {
+                  e.preventDefault();
+                  onClose();
+                }
+              }}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 rounded-lg border border-slate-800 transition-colors shadow-sm"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to ApliVox Home</span>
+            </a>
 
             <div className="flex items-center gap-2 text-xs text-slate-400">
-              <span>Legal & Privacy Center</span>
+              <span>Legal Document</span>
               <span aria-hidden="true" className="text-slate-600">/</span>
               <span className="text-cyan-400 font-semibold">{currentPolicy.appName}</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Copy Canonical App Store URL */}
             <button
-              onClick={handleCopyLink}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 rounded-lg border border-slate-800 transition-colors"
-              title="Copy direct link to this policy"
+              onClick={handleCopyUrl}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-200 hover:text-white bg-slate-900 hover:bg-slate-800 rounded-lg border border-slate-800 transition-colors"
+              title="Copy official App Store privacy URL"
             >
-              {copiedLink ? (
+              {copiedUrl ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
                   <span className="text-emerald-400">URL Copied!</span>
@@ -115,7 +103,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5" />
-                  <span>Copy Link</span>
+                  <span>Copy App Store URL</span>
                 </>
               )}
             </button>
@@ -131,61 +119,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
           </div>
         </div>
 
-        {/* Tab Navigation to switch between app policies */}
-        <div>
-          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
-            Select Application Privacy Policy
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            {APPS_DATA.map((app) => (
-              <button
-                key={app.id}
-                onClick={() => {
-                  setActiveTab(app.id);
-                  onSelectAppId(app.id);
-                  window.history.replaceState(null, '', `#privacy-${app.id}`);
-                }}
-                className={`flex flex-col text-left p-3.5 rounded-xl border transition-all ${
-                  activeTab === app.id
-                    ? 'bg-slate-900 border-cyan-500/60 shadow-lg shadow-cyan-950/40 text-white'
-                    : 'bg-slate-900/40 hover:bg-slate-900/70 border-slate-800/80 text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white">{app.name}</span>
-                  <span className="text-[10px] text-slate-400 font-mono">iOS</span>
-                </div>
-                <span className="text-[11px] text-slate-400 truncate mt-1">
-                  Privacy Policy
-                </span>
-              </button>
-            ))}
-
-            {/* Corporate Policy */}
-            <button
-              onClick={() => {
-                setActiveTab('aplivox');
-                onSelectAppId('aplivox');
-                window.history.replaceState(null, '', '#privacy-aplivox');
-              }}
-              className={`flex flex-col text-left p-3.5 rounded-xl border transition-all ${
-                activeTab === 'aplivox'
-                  ? 'bg-slate-900 border-cyan-500/60 shadow-lg shadow-cyan-950/40 text-white'
-                  : 'bg-slate-900/40 hover:bg-slate-900/70 border-slate-800/80 text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-white">ApliVox Corporate</span>
-                <span className="text-[10px] text-slate-400 font-mono">Web & Platform</span>
-              </div>
-              <span className="text-[11px] text-slate-400 truncate mt-1">
-                Company-wide Standards
-              </span>
-            </button>
-          </div>
-        </div>
-
-        {/* Main Document Container */}
+        {/* Main Document Container (Dedicated to this app alone) */}
         <div className="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
           {/* Subtle accent glow */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 blur-[90px] rounded-full pointer-events-none" />
@@ -215,13 +149,24 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
               </div>
               <span aria-hidden="true" className="text-slate-700">·</span>
               <div>
-                <span className="text-slate-400">Governing Entity:</span>{' '}
+                <span className="text-slate-400">Entity:</span>{' '}
                 <span className="text-slate-300 font-medium">ApliVox</span>
               </div>
             </div>
 
+            {/* In-App Purchases Notice Badge */}
+            <div className="mt-3 p-3.5 rounded-xl bg-slate-950/90 border border-cyan-500/30 flex items-start gap-3">
+              <CreditCard className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+              <div className="space-y-0.5 text-xs">
+                <span className="font-semibold text-white">Apple StoreKit In-App Purchases Protected</span>
+                <p className="text-slate-400 leading-relaxed text-[11px]">
+                  All in-app purchases, subscriptions, sound packs, and upgrades in {currentPolicy.appName} are executed through Apple StoreKit. ApliVox does not collect, receive, or store your credit card or financial information.
+                </p>
+              </div>
+            </div>
+
             {/* Summary Box */}
-            <div className="mt-4 p-4 rounded-xl bg-slate-950/80 border border-cyan-500/30 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <div className="mt-4 p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed">
               <div className="font-semibold text-cyan-400 mb-1 flex items-center gap-1.5">
                 <Check className="w-4 h-4" />
                 <span>Executive Privacy Summary</span>
@@ -243,12 +188,12 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
                 <div className="text-xs font-bold text-emerald-400">
                   {currentPolicy.appStoreNutrition.dataUsedToTrackYou}
                 </div>
-                <p className="text-[11px] text-slate-400">No cross-app or web tracking</p>
+                <p className="text-[11px] text-slate-400">Zero cross-app or web tracking</p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1">
                 <div className="text-[11px] text-slate-400 font-medium">Data Linked to You</div>
-                <div className="text-xs font-bold text-emerald-400">
+                <div className="text-xs font-bold text-cyan-400">
                   {currentPolicy.appStoreNutrition.dataLinkedToYou}
                 </div>
                 <p className="text-[11px] text-slate-400">No account required</p>
@@ -256,7 +201,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
 
               <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1">
                 <div className="text-[11px] text-slate-400 font-medium">Data Collection</div>
-                <div className="text-xs font-bold text-cyan-400">
+                <div className="text-xs font-bold text-white">
                   {currentPolicy.appStoreNutrition.dataCollected}
                 </div>
                 <p className="text-[11px] text-slate-400">Minimal telemetry standard</p>
@@ -264,7 +209,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
 
               <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1">
                 <div className="text-[11px] text-slate-400 font-medium">On-Device Storage</div>
-                <div className="text-xs font-bold text-white">
+                <div className="text-xs font-bold text-slate-200">
                   Local Sandboxed Storage
                 </div>
                 <p className="text-[11px] text-slate-400 truncate">
@@ -280,7 +225,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search policy sections (e.g., storage, export, cookies)..."
+                placeholder="Search policy sections (e.g., purchases, StoreKit, storage, export)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500"
@@ -306,7 +251,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
               filteredSections.map((section) => (
                 <div key={section.id} id={section.id} className="space-y-3 scroll-mt-28">
                   <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
-                    <span className="text-cyan-400">§</span>
+                    <span className="text-cyan-400 font-mono">§</span>
                     <span>{section.title}</span>
                   </h2>
 
@@ -320,18 +265,18 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
             )}
           </div>
 
-          {/* Direct Support & Contact link ending with domain URL as required */}
+          {/* Direct Support & Contact link ending with domain URL */}
           <div className="mt-12 pt-8 border-t border-slate-800 rounded-xl bg-slate-950 p-6 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
-                  Need Help or Have Privacy Inquiries?
+                  Support & Privacy Inquiries
                 </div>
                 <h3 className="text-base font-bold text-white">
-                  Direct Developer Support for {currentPolicy.appName}
+                  Developer Support for {currentPolicy.appName}
                 </h3>
                 <p className="text-xs text-slate-400">
-                  Our software engineering team handles support inquiries directly with no intermediary ticketing bots.
+                  Our engineering team handles all customer and compliance questions directly.
                 </p>
               </div>
 
@@ -347,12 +292,12 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
               </a>
             </div>
 
-            <div className="flex items-center gap-4 text-xs text-slate-400 pt-2 border-t border-slate-800/80">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-2 border-t border-slate-800/80">
               <span className="font-mono text-cyan-300">support@aplivox.com</span>
               <span aria-hidden="true" className="text-slate-700">·</span>
               <span>Domain: aplivox.com</span>
               <span aria-hidden="true" className="text-slate-700">·</span>
-              <span>Response SLA: 24–48 Hours</span>
+              <span>Direct Developer Response</span>
             </div>
           </div>
         </div>

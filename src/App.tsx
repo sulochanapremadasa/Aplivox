@@ -12,48 +12,91 @@ import { PrivacyPolicyViewer } from './components/PrivacyPolicyViewer';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { VideoModal } from './components/VideoModal';
-import { AppSpecsModal } from './components/AppSpecsModal';
 import { MobileApp, APPS_DATA } from './data/appsData';
-import { Shield, Sparkles, Smartphone, ArrowRight, ArrowLeft } from 'lucide-react';
 
 export default function App() {
   // 'home' | 'privacy'
   const [currentView, setCurrentView] = useState<'home' | 'privacy'>('home');
   const [selectedPrivacyAppId, setSelectedPrivacyAppId] = useState<string>('isounds');
   const [videoModalApp, setVideoModalApp] = useState<MobileApp | null>(null);
-  const [specsModalApp, setSpecsModalApp] = useState<MobileApp | null>(null);
 
-  // Sync with browser URL hash
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash.startsWith('#privacy-')) {
-        const appId = hash.replace('#privacy-', '');
-        setSelectedPrivacyAppId(appId);
-        setCurrentView('privacy');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#privacy') {
+  // Helper to parse route from current window location
+  const syncRouteFromLocation = () => {
+    const pathname = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+
+    // Check pathname: /privacy/habitbloom, /privacy/isounds, /privacy/motorlog
+    if (pathname.startsWith('/privacy')) {
+      const parts = pathname.split('/').filter(Boolean);
+      if (parts.length >= 2) {
+        const subId = parts[1];
+        if (subId === 'habitbloom' || subId === 'isounds' || subId === 'motorlog') {
+          setSelectedPrivacyAppId(subId);
+        } else if (subId === 'corporate' || subId === 'aplivox') {
+          setSelectedPrivacyAppId('aplivox');
+        } else {
+          setSelectedPrivacyAppId('isounds');
+        }
+      } else {
         setSelectedPrivacyAppId('isounds');
-        setCurrentView('privacy');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+      setCurrentView('privacy');
+      return;
+    }
+
+    // Check hash fallback: #privacy-habitbloom, etc.
+    if (hash.startsWith('#privacy-')) {
+      const appId = hash.replace('#privacy-', '');
+      setSelectedPrivacyAppId(appId);
+      setCurrentView('privacy');
+      return;
+    }
+
+    // Otherwise home
+    setCurrentView('home');
+  };
+
+  // Sync route on mount and on popstate
+  useEffect(() => {
+    syncRouteFromLocation();
+
+    const handlePopState = () => {
+      syncRouteFromLocation();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('hashchange', handlePopState);
+    };
   }, []);
+
+  // Update browser document title based on view
+  useEffect(() => {
+    if (currentView === 'privacy') {
+      const app = APPS_DATA.find((a) => a.id === selectedPrivacyAppId);
+      if (app) {
+        document.title = `${app.name} Privacy Policy — ApliVox`;
+      } else if (selectedPrivacyAppId === 'aplivox') {
+        document.title = `Corporate Privacy Policy — ApliVox`;
+      } else {
+        document.title = `Privacy Policy — ApliVox`;
+      }
+    } else {
+      document.title = `ApliVox — Modern Software Engineering & Digital Innovation`;
+    }
+  }, [currentView, selectedPrivacyAppId]);
 
   const handleSelectPrivacy = (appId: string) => {
     setSelectedPrivacyAppId(appId);
     setCurrentView('privacy');
-    window.location.hash = `privacy-${appId}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToHome = () => {
     setCurrentView('home');
-    window.history.replaceState(null, '', window.location.pathname);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -76,11 +119,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500/20 selection:text-cyan-300">
-      {/* Top Navigation */}
+      {/* Top Navigation without Privacy tab */}
       <Navbar
-        onSelectPrivacy={handleSelectPrivacy}
         onOpenContact={handleOpenContact}
         onScrollToSection={scrollToSection}
+        currentView={currentView}
+        onBackToHome={handleBackToHome}
       />
 
       {/* Main View Switching */}
@@ -88,9 +132,7 @@ export default function App() {
         <main className="flex-1">
           <PrivacyPolicyViewer
             selectedAppId={selectedPrivacyAppId}
-            onSelectAppId={(id) => setSelectedPrivacyAppId(id)}
             onClose={handleBackToHome}
-            isStandalonePage={true}
           />
         </main>
       ) : (
@@ -98,63 +140,29 @@ export default function App() {
           {/* Hero Section */}
           <Hero
             onExploreApps={() => scrollToSection('apps-showcase')}
-            onOpenPrivacyHub={() => handleSelectPrivacy('isounds')}
+            onExploreVision={() => scrollToSection('vision-mission')}
             onSelectApp={(appId) => {
               scrollToSection('apps-showcase');
             }}
           />
 
-          {/* Horizontal Scroll View for Mobile Applications with direct Privacy Policy links */}
+          {/* Horizontal Scroll View for Mobile Applications:
+              Each app card contains ONLY the direct link to open the privacy policy for that app */}
           <AppsHorizontalScroll
             onSelectPrivacy={handleSelectPrivacy}
             onOpenVideoModal={(app) => setVideoModalApp(app)}
-            onOpenSpecsModal={(app) => setSpecsModalApp(app)}
           />
 
           {/* Vision & Mission Section */}
           <VisionMission />
-
-          {/* Privacy & Trust Banner Callout */}
-          <section className="py-16 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-y border-slate-800/80">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="rounded-2xl bg-gradient-to-tr from-cyan-950/40 via-slate-900 to-indigo-950/30 border border-cyan-500/30 p-8 sm:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
-                <div className="space-y-3 max-w-2xl text-center lg:text-left">
-                  <div className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 uppercase tracking-wider">
-                    <Shield className="w-4 h-4" />
-                    <span>Uncompromising Privacy Standard</span>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                    Transparent, Legally Compliant Privacy Policies for Every App
-                  </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    We practice zero ad broker surveillance, minimal telemetry, and offline-first local storage. Review the complete privacy policies for iSounds, HabitBloom, and MotorLog.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
-                  {APPS_DATA.map((app) => (
-                    <button
-                      key={app.id}
-                      onClick={() => handleSelectPrivacy(app.id)}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-200 hover:text-white border border-slate-700 hover:border-cyan-400/50 transition-all shadow-sm"
-                    >
-                      <span>{app.name} Policy</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
 
           {/* Contact Us & Support Section (Opens Mail App with domain url) */}
           <ContactSection />
         </main>
       )}
 
-      {/* Global Footer */}
+      {/* Global Footer (Privacy links removed as requested) */}
       <Footer
-        onSelectPrivacy={handleSelectPrivacy}
         onScrollToSection={scrollToSection}
       />
 
@@ -162,12 +170,6 @@ export default function App() {
       <VideoModal
         app={videoModalApp}
         onClose={() => setVideoModalApp(null)}
-        onOpenPrivacy={handleSelectPrivacy}
-      />
-
-      <AppSpecsModal
-        app={specsModalApp}
-        onClose={() => setSpecsModalApp(null)}
         onOpenPrivacy={handleSelectPrivacy}
       />
     </div>

@@ -4,13 +4,13 @@ import { COMPANY_INFO, APPS_DATA } from '../data/appsData';
 
 interface HeroProps {
   onExploreApps: () => void;
-  onOpenPrivacyHub: () => void;
+  onExploreVision: () => void;
   onSelectApp: (appId: string) => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
   onExploreApps,
-  onOpenPrivacyHub,
+  onExploreVision,
   onSelectApp,
 }) => {
   return (
@@ -56,11 +56,11 @@ export const Hero: React.FC<HeroProps> = ({
             </button>
 
             <button
-              onClick={onOpenPrivacyHub}
+              onClick={onExploreVision}
               className="inline-flex items-center gap-2.5 px-6 py-3.5 text-sm font-semibold text-slate-200 hover:text-white bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 rounded-xl transition-all active:scale-95"
             >
-              <Shield className="w-4 h-4 text-cyan-400" />
-              <span>View Privacy Policies</span>
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span>Vision & Innovation</span>
             </button>
           </div>
 

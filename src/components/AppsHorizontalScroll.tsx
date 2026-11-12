@@ -8,24 +8,19 @@ import {
   Volume2,
   VolumeX,
   Maximize2,
-  Info,
   CheckCircle2,
-  Mail,
   Smartphone,
-  ExternalLink,
 } from 'lucide-react';
 import { MobileApp, APPS_DATA } from '../data/appsData';
 
 interface AppsHorizontalScrollProps {
   onSelectPrivacy: (appId: string) => void;
   onOpenVideoModal: (app: MobileApp) => void;
-  onOpenSpecsModal: (app: MobileApp) => void;
 }
 
 export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
   onSelectPrivacy,
   onOpenVideoModal,
-  onOpenSpecsModal,
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -314,41 +309,20 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
                 </div>
               </div>
 
-              {/* CARD FOOTER: EXACT REQUIREMENT: Link to each privacy policy page in each app */}
-              <div className="p-6 pt-0 space-y-3">
-                {/* PRIMARY PRIVACY POLICY BUTTON FOR THIS APP */}
-                <button
-                  onClick={() => onSelectPrivacy(app.id)}
-                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-950/70 via-slate-900 to-slate-900 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 hover:text-white transition-all group shadow-sm hover:shadow-cyan-950"
+              {/* CARD FOOTER: Keep only privacy policy link for each app */}
+              <div className="p-6 pt-0">
+                <a
+                  href={app.privacyPolicy.path}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectPrivacy(app.id);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-950/70 via-slate-900 to-slate-900 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 hover:text-white transition-all text-xs font-semibold shadow-sm hover:shadow-cyan-950/50 cursor-pointer"
+                  title={`${app.name} Privacy Policy`}
                 >
-                  <div className="flex items-center gap-2.5 text-xs font-semibold">
-                    <Shield className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
-                    <span>View {app.name} Privacy Policy</span>
-                  </div>
-                  <span className="text-xs text-cyan-400 group-hover:translate-x-1 transition-transform">
-                    →
-                  </span>
-                </button>
-
-                {/* Secondary Actions: Specs & Support Link */}
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <button
-                    onClick={() => onOpenSpecsModal(app)}
-                    className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-colors"
-                  >
-                    <Info className="w-3.5 h-3.5 text-slate-400" />
-                    <span>Specs & Details</span>
-                  </button>
-
-                  <a
-                    href={`mailto:support@aplivox.com?subject=${encodeURIComponent(app.name + ' Support Inquiry')}`}
-                    className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-colors"
-                    title={`Contact support for ${app.name}`}
-                  >
-                    <Mail className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Support</span>
-                  </a>
-                </div>
+                  <Shield className="w-4 h-4 text-cyan-400" />
+                  <span>{app.name} Privacy Policy</span>
+                </a>
               </div>
             </div>
           ))}

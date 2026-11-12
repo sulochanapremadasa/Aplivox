@@ -7,6 +7,8 @@ export interface PrivacySection {
 export interface AppPrivacyPolicy {
   appName: string;
   appIdentifier: string;
+  path: string;
+  canonicalUrl: string;
   effectiveDate: string;
   lastUpdated: string;
   summary: string;
@@ -62,37 +64,39 @@ export const APPS_DATA: MobileApp[] = [
     accentText: 'text-emerald-400',
     videoSrc: '/assets/aistudio/iSounds_Promo_video_1ff991e3.mp4',
     description:
-      'A responsive, offline-ready soundboard mobile application delivering over 100 funny and expressive reaction sounds. Built with tap-to-play immediacy, sound search, and custom dark/light themes.',
+      'A responsive, offline-ready soundboard mobile application delivering over 100 funny and expressive reaction sounds. Built with tap-to-play immediacy, sound search, customizable sound packs, and dark/light themes.',
     highlights: [
       '100+ high-quality curated reaction & comedic sounds',
       'Instant tap-to-play & tap-to-stop audio engine',
+      'Optional premium sound packs via Apple StoreKit',
       'Dual appearance: Optimized Dark & Light modes',
       'Completely functional offline without network access',
-      'Minimalist, distraction-free sound navigation',
     ],
     privacyHighlight:
-      'Zero personal data collection. No microphone or audio recordings. 100% on-device audio playback.',
+      'Zero personal data collection. No microphone or audio recordings. In-App Purchases processed safely via Apple StoreKit.',
     specs: {
       platform: 'iOS 15.0 or later',
-      currentVersion: 'Version 1.0.0',
-      pricing: 'Free with optional sound packs',
+      currentVersion: 'Version 1.1.0',
+      pricing: 'Free with In-App Purchases (Sound Packs & Tips)',
       storageMode: '100% On-Device Asset Bundle',
-      internetRequired: 'No (Full offline playback)',
+      internetRequired: 'No (Offline playback; internet only used for App Store transactions)',
       ageRating: 'Rated 4+ (Family Friendly)',
     },
     privacyPolicy: {
       appName: 'iSounds',
       appIdentifier: 'com.aplivox.isounds',
+      path: '/privacy/isounds',
+      canonicalUrl: 'https://aplivox.com/privacy/isounds',
       effectiveDate: 'November 1, 2026',
       lastUpdated: 'November 12, 2026',
       summary:
-        'iSounds is designed from the ground up to respect your privacy. The app operates entirely locally on your device, does not record any audio, does not require an account, and does not sell or share personal data.',
+        'iSounds is designed from the ground up to respect your privacy. The app operates locally on your device, does not record any audio, does not require an account, and processes all optional In-App Purchases securely through Apple StoreKit without collecting personal payment information.',
       contactEmail: 'support@aplivox.com',
       appStoreNutrition: {
-        dataCollected: 'None (Data Not Collected)',
-        dataLinkedToYou: 'None',
+        dataCollected: 'In-App Purchase Records (processed via Apple StoreKit; no ad tracking)',
+        dataLinkedToYou: 'None (not linked to user identity or advertising identifiers)',
         dataUsedToTrackYou: 'None',
-        onDeviceStorage: 'User UI preferences (Dark/Light mode) saved locally',
+        onDeviceStorage: 'User UI preferences, unlocked sound pack entitlement tokens',
       },
       sections: [
         {
@@ -101,7 +105,7 @@ export const APPS_DATA: MobileApp[] = [
           content: [
             'ApliVox ("we", "us", or "our") built the iSounds application as a privacy-first mobile soundboard application.',
             'This Privacy Policy informs you regarding our policies on the collection, use, and disclosure of personal data when you use the iSounds mobile application.',
-            'Our core principle is simple: your device is your own. iSounds does not collect personal information, does not harvest contact details, and does not listen to your microphone.',
+            'Our core principle is simple: your device is your own. iSounds does not collect personal information, does not harvest contact details, does not listen to your microphone, and does not profile users.',
           ],
         },
         {
@@ -110,42 +114,55 @@ export const APPS_DATA: MobileApp[] = [
           content: [
             'No Personal Information: We do not ask for or collect names, email addresses, phone numbers, or physical addresses within iSounds.',
             'No Audio Recording: iSounds only outputs pre-bundled sound effects. It does not access, request permission for, or record through your device microphone.',
-            'Local Settings Only: User preferences such as theme selection (Light vs. Dark Mode) and volume levels are stored exclusively in local device storage (UserDefaults / Keychain) and never uploaded to our servers.',
+            'Local Settings Only: User preferences such as theme selection (Light vs. Dark Mode) and volume levels are stored exclusively in local device storage (UserDefaults / Keychain) and never uploaded to external servers.',
+          ],
+        },
+        {
+          id: 'in-app-purchases',
+          title: '3. In-App Purchases & Apple StoreKit Integration',
+          content: [
+            'Optional In-App Purchases: iSounds offers optional In-App Purchases, including non-consumable premium sound packs, extra reaction sets, and voluntary developer tip unlocks.',
+            'Payment Processing by Apple: All financial transactions, billing operations, and payment methods (such as Apple Pay, credit cards, and PayPal) are managed solely by Apple Inc. through Apple StoreKit. ApliVox never receives, processes, or stores your credit card numbers, billing addresses, or banking information.',
+            'Receipt Validation & Entitlements: When you make a purchase, Apple provides a cryptographic transaction receipt. This receipt is verified locally on your device via Apple StoreKit APIs to activate your unlocked sound packs. The entitlement state is saved within the sandboxed app storage.',
+            'Restore Purchases: If you reinstall iSounds or switch to a new iOS device signed into the same Apple ID, you can restore all previously purchased sound packs by tapping "Restore Purchases" in Settings at no extra cost.',
+            'Billing Inquiries & Refunds: Because Apple handles all billing directly, any refund requests or purchase disputes are governed by Apple Media Services Terms and Conditions and must be submitted to Apple at reportaproblem.apple.com.',
           ],
         },
         {
           id: 'network-usage',
-          title: '3. Internet and Network Usage',
+          title: '4. Internet and Network Usage',
           content: [
-            'iSounds is engineered to run seamlessly in airplane mode without internet connectivity.',
-            'The app does not communicate with any external analytics servers, behavioral tracking trackers, or ad networks.',
-            'The only optional network interaction occurs if you choose to tap the "Contact Us" support button, which will launch your native mail client to draft an email to support@aplivox.com.',
+            'iSounds is engineered to run seamlessly in airplane mode without internet connectivity for standard sound playback.',
+            'Internet connectivity is only engaged when communicating with Apple App Store servers during purchase requests or when restoring previously purchased sound packs.',
+            'The app does not communicate with any external analytics servers, behavioral tracking trackers, or third-party ad networks.',
+            'If you tap the "Contact Us" support button, it launches your device native mail client to draft an email directly to support@aplivox.com.',
           ],
         },
         {
           id: 'children-privacy',
-          title: "4. Children's Privacy (COPPA & Global Standards)",
+          title: "5. Children's Privacy (COPPA & Global Standards)",
           content: [
             'iSounds complies with the Children’s Online Privacy Protection Act (COPPA) and the EU General Data Protection Regulation (GDPR).',
             'We do not knowingly collect any personally identifiable information from children under the age of 13.',
-            'Because the app collects no personal information whatsoever, it is safe for family use.',
+            'Because the app collects no personal information whatsoever, it is safe for family and children use. In-App Purchases are subject to iOS Screen Time and Ask to Buy parental controls.',
           ],
         },
         {
           id: 'third-party',
-          title: '5. Third-Party Services & Apple App Store',
+          title: '6. Third-Party Services & Apple App Store',
           content: [
             'iSounds is distributed through the Apple App Store. When you download, update, or purchase anything through Apple, Apple Inc. handles billing and licensing according to their Apple Privacy Policy.',
-            'ApliVox receives only anonymized aggregate download metrics provided standard by Apple App Store Connect without individual identifiers.',
+            'ApliVox receives only anonymized aggregate download and financial telemetry provided standard by Apple App Store Connect without individual identifiers.',
           ],
         },
         {
           id: 'contact',
-          title: '6. Support & Contact Information',
+          title: '7. Support & Contact Information',
           content: [
             'If you have questions, feedback, or concerns regarding this privacy policy or iSounds, please contact our support desk directly:',
             'Email: support@aplivox.com',
             'Domain: aplivox.com',
+            'Canonical Privacy URL: https://aplivox.com/privacy/isounds',
             'Support requests are answered by our engineering team within 24 to 48 business hours.',
           ],
         },
@@ -166,37 +183,39 @@ export const APPS_DATA: MobileApp[] = [
     accentText: 'text-indigo-400',
     videoSrc: '/assets/aistudio/HabitBloom_Promo_video_6cc0582d.mp4',
     description:
-      'A mindful daily habit tracker engineered to build lasting consistency. Create personalized routines, track streaks, inspect monthly habit matrices, and export your personal data at any time.',
+      'A mindful daily habit tracker engineered to build lasting consistency. Create personalized routines, track streaks, inspect monthly habit matrices, unlock HabitBloom Pro features, and export your personal data at any time.',
     highlights: [
       'Single-tap daily habit checkoffs and streak counters',
       'Visual Habit Consistency Matrix with 30-day analytics',
-      'Personalized habit icons, frequencies, and color themes',
+      'HabitBloom Pro In-App Purchases for unlimited habits & themes',
       'Configurable push reminders with custom Silent Hours',
       'Complete CSV data export and instant local storage reset',
     ],
     privacyHighlight:
-      'Strict on-device storage. No habit logging sent to cloud servers. User maintains full ownership and CSV export rights.',
+      'Strict on-device storage. No habit logging sent to cloud servers. In-App Purchases processed securely via Apple StoreKit.',
     specs: {
       platform: 'iOS 16.0 or later',
       currentVersion: 'Version 1.2.0',
-      pricing: 'Free with Pro Features',
+      pricing: 'Free with HabitBloom Pro In-App Purchases',
       storageMode: 'Local Encrypted SQLite / CoreData',
-      internetRequired: 'No (Offline-first architecture)',
+      internetRequired: 'No (Offline-first architecture; network only for App Store purchases)',
       ageRating: 'Rated 4+ (All ages)',
     },
     privacyPolicy: {
       appName: 'HabitBloom',
       appIdentifier: 'com.aplivox.habitbloom',
+      path: '/privacy/habitbloom',
+      canonicalUrl: 'https://aplivox.com/privacy/habitbloom',
       effectiveDate: 'November 1, 2026',
       lastUpdated: 'November 12, 2026',
       summary:
-        'HabitBloom is dedicated to protecting your personal routines and wellness data. All your habits, schedules, completion logs, and streak metrics are stored strictly on your local device. We never sell, monetize, or transmit your habit data.',
+        'HabitBloom is dedicated to protecting your personal routines and wellness data. All habits, schedules, logs, and streak metrics are stored strictly on your local device. We never sell, monetize, or transmit your habit data. Optional HabitBloom Pro In-App Purchases are processed through Apple StoreKit with zero access to your billing instruments.',
       contactEmail: 'support@aplivox.com',
       appStoreNutrition: {
-        dataCollected: 'None (Data Not Collected)',
-        dataLinkedToYou: 'None',
+        dataCollected: 'In-App Purchase History (processed via Apple StoreKit for Pro feature unlocks)',
+        dataLinkedToYou: 'Purchase records handled by Apple StoreKit (not linked to habit data or identity by ApliVox)',
         dataUsedToTrackYou: 'None',
-        onDeviceStorage: 'Habits, streaks, notes, and notification schedules',
+        onDeviceStorage: 'Habits, streaks, notes, notification schedules, and local Pro license token',
       },
       sections: [
         {
@@ -205,6 +224,7 @@ export const APPS_DATA: MobileApp[] = [
           content: [
             'Habits are deeply personal. When you record your meditation, medication, sleep schedule, or fitness routines, that information belongs solely to you.',
             'ApliVox operates HabitBloom under an "Offline-First, Privacy-First" standard. We do not require account registration, social login, or cloud syncing to use core features.',
+            'Your routines, streak records, and completion matrices remain strictly inside your device sandbox.',
           ],
         },
         {
@@ -217,8 +237,19 @@ export const APPS_DATA: MobileApp[] = [
           ],
         },
         {
+          id: 'in-app-purchases',
+          title: '3. In-App Purchases & HabitBloom Pro Subscriptions',
+          content: [
+            'HabitBloom Pro Features: HabitBloom offers optional In-App Purchases, including HabitBloom Pro auto-renewable subscriptions (monthly or annual) and one-time lifetime unlock licenses that enable unlimited active routines, custom icons and color palettes, and advanced 30-day analytics.',
+            'Secure Payment Execution by Apple: All transactions and billing cycles are processed exclusively through Apple StoreKit. ApliVox never has access to your banking information, payment card numbers, billing addresses, or Apple ID credentials.',
+            'Subscription Management & Auto-Renewal: Auto-renewable subscriptions automatically renew unless canceled at least 24 hours before the end of the current billing cycle. You can manage or cancel your subscription at any time in your iOS Apple ID Account Settings (Settings > [Your Name] > Subscriptions).',
+            'Restore Purchases: You can restore your HabitBloom Pro access at any time across all your personal iOS devices signed into your Apple ID via Settings > Restore Purchases without incurring additional charges.',
+            'Separation of Purchases from Personal Habits: Your purchase receipt is validated strictly to unlock Pro capabilities; your actual habits and completion logs are never linked to your Apple ID purchase records or transmitted to third parties.',
+          ],
+        },
+        {
           id: 'notifications',
-          title: '3. Device Notifications & Silent Hours',
+          title: '4. Device Notifications & Silent Hours',
           content: [
             'HabitBloom allows you to set daily reminders for your routines.',
             'Local Push Notifications: All reminders are scheduled locally on the device using Apple’s UserNotifications framework. No external remote push notification servers are used to trigger your reminders.',
@@ -228,7 +259,7 @@ export const APPS_DATA: MobileApp[] = [
         },
         {
           id: 'data-ownership',
-          title: '4. Data Ownership, Export (CSV) & Deletion',
+          title: '5. Data Ownership, Export (CSV) & Deletion',
           content: [
             'Export Data: HabitBloom includes a built-in "Export Data (CSV)" tool allowing you to export your complete habit logs at any time.',
             'Clear Local Storage: You can permanently erase all stored habits, history, and preferences from your device directly via Settings > Clear Local Storage.',
@@ -237,7 +268,7 @@ export const APPS_DATA: MobileApp[] = [
         },
         {
           id: 'analytics',
-          title: '5. Analytics & Diagnostics',
+          title: '6. Analytics & Diagnostics',
           content: [
             'HabitBloom does not use third-party user behavioral tracking SDKs (no Facebook Pixel, no Google Firebase Analytics, no Mixpanel).',
             'Only crash reports explicitly opted into by the user via Apple TestFlight or iOS Diagnostics are collected in aggregate by Apple and shared with developers.',
@@ -245,11 +276,12 @@ export const APPS_DATA: MobileApp[] = [
         },
         {
           id: 'contact',
-          title: '6. Contact & Support',
+          title: '7. Contact & Support',
           content: [
             'For any questions regarding your data or feature suggestions:',
             'Email: support@aplivox.com',
             'Organization: ApliVox Digital Innovation',
+            'Canonical Privacy URL: https://aplivox.com/privacy/habitbloom',
           ],
         },
       ],
@@ -290,14 +322,16 @@ export const APPS_DATA: MobileApp[] = [
     privacyPolicy: {
       appName: 'MotorLog',
       appIdentifier: 'com.aplivox.motorlog',
+      path: '/privacy/motorlog',
+      canonicalUrl: 'https://aplivox.com/privacy/motorlog',
       effectiveDate: 'November 1, 2026',
       lastUpdated: 'November 12, 2026',
       summary:
         'MotorLog values the confidentiality of your vehicle fleet and maintenance records. Your vehicle photos, license plates, chassis numbers, odometer milestones, service receipts, and driver licenses are stored securely on your device. We do not sell vehicle data or share your logs with insurance providers or advertising brokers.',
       contactEmail: 'support@aplivox.com',
       appStoreNutrition: {
-        dataCollected: 'None (Data Not Collected for Tracking)',
-        dataLinkedToYou: 'In-App Purchase history (processed by Apple StoreKit)',
+        dataCollected: 'In-App Purchase Records (processed via Apple StoreKit for MotorLog Pro)',
+        dataLinkedToYou: 'In-App Purchase history (processed by Apple StoreKit, not linked to garage records)',
         dataUsedToTrackYou: 'None',
         onDeviceStorage: 'Vehicles, maintenance records, driver details, odometer readings',
       },
@@ -331,11 +365,12 @@ export const APPS_DATA: MobileApp[] = [
         },
         {
           id: 'in-app-purchases',
-          title: '4. In-App Purchases & MotorLog Pro',
+          title: '4. In-App Purchases & MotorLog Pro (Apple StoreKit)',
           content: [
-            'MotorLog offers an optional MotorLog Pro subscription that unlocks unlimited vehicles and advanced service records.',
-            'All payment processing is handled strictly by Apple Inc. via Apple StoreKit.',
-            'ApliVox does not collect, receive, or store your credit card numbers, billing addresses, or payment credentials.',
+            'MotorLog offers an optional MotorLog Pro subscription and lifetime license that unlocks unlimited vehicles and advanced service records.',
+            'All payment processing is handled strictly by Apple Inc. via Apple StoreKit. ApliVox does not collect, receive, or store your credit card numbers, billing addresses, or payment credentials.',
+            'Subscriptions can be canceled at any time in Apple ID Account Settings.',
+            'You can restore previously purchased Pro licenses using the "Restore Purchases" button in Settings.',
           ],
         },
         {
@@ -353,6 +388,7 @@ export const APPS_DATA: MobileApp[] = [
             'For technical support, warranty questions, or privacy disclosures:',
             'Email: support@aplivox.com',
             'Organization: ApliVox Engineering Studio',
+            'Canonical Privacy URL: https://aplivox.com/privacy/motorlog',
           ],
         },
       ],
@@ -399,6 +435,8 @@ export const COMPANY_INFO = {
 export const CORPORATE_PRIVACY_POLICY: AppPrivacyPolicy = {
   appName: 'ApliVox Corporate & Platform',
   appIdentifier: 'com.aplivox.corporate',
+  path: '/privacy',
+  canonicalUrl: 'https://aplivox.com/privacy',
   effectiveDate: 'November 1, 2026',
   lastUpdated: 'November 12, 2026',
   summary:
@@ -438,12 +476,12 @@ export const CORPORATE_PRIVACY_POLICY: AppPrivacyPolicy = {
     },
     {
       id: 'app-privacy-links',
-      title: '4. Application-Specific Privacy Policies',
+      title: '4. Application-Specific Privacy Policies & In-App Purchases',
       content: [
         'Each mobile application developed by ApliVox maintains its own dedicated privacy policy reflecting its technical architecture:',
-        '• iSounds: 100% on-device entertainment soundboard with zero data collection.',
-        '• HabitBloom: Offline-first mindful habit tracker with local storage and CSV export.',
-        '• MotorLog: Vehicle garage and maintenance tracker with sandboxed device logs.',
+        '• iSounds (https://aplivox.com/privacy/isounds): 100% on-device soundboard with Apple StoreKit in-app purchases for sound packs and zero audio recording.',
+        '• HabitBloom (https://aplivox.com/privacy/habitbloom): Offline-first mindful habit tracker with HabitBloom Pro StoreKit subscriptions, local storage, and CSV export.',
+        '• MotorLog (https://aplivox.com/privacy/motorlog): Vehicle garage and maintenance tracker with sandboxed device logs and MotorLog Pro StoreKit subscriptions.',
       ],
     },
     {

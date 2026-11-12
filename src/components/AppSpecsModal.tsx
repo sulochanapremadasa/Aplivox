@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Smartphone, Shield, CheckCircle2, Lock, HardDrive, WifiOff, FileCheck } from 'lucide-react';
+import { X, Smartphone, Shield, CheckCircle2, Lock, HardDrive, WifiOff, FileCheck, CreditCard } from 'lucide-react';
 import { MobileApp } from '../data/appsData';
 
 interface AppSpecsModalProps {
@@ -74,16 +74,16 @@ export const AppSpecsModal: React.FC<AppSpecsModalProps> = ({
 
           <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
             <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
-              <WifiOff className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Internet Dependency</span>
+              <CreditCard className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Pricing & In-App Purchases</span>
             </div>
-            <div className="font-semibold text-white">{app.specs.internetRequired}</div>
+            <div className="font-semibold text-white">{app.specs.pricing}</div>
           </div>
 
           <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
             <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
               <FileCheck className="w-3.5 h-3.5 text-teal-400" />
-              <span>Age Classification</span>
+              <span>Age & Review Classification</span>
             </div>
             <div className="font-semibold text-white">{app.specs.ageRating}</div>
           </div>
