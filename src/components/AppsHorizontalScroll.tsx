@@ -12,6 +12,7 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { MobileApp, APPS_DATA } from '../data/appsData';
+import { SafariSafeVideo } from './SafariSafeVideo';
 
 interface AppsHorizontalScrollProps {
   onSelectPrivacy: (appId: string) => void;
@@ -27,11 +28,11 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [activeAppIndex, setActiveAppIndex] = useState(0);
 
-  // Video play state tracker for each card
+  // Video play state tracker for each card (updated from real playback events)
   const [playingState, setPlayingState] = useState<Record<string, boolean>>({
-    isounds: true,
-    habitbloom: true,
-    motorlog: true,
+    isounds: false,
+    habitbloom: false,
+    motorlog: false,
   });
   const [mutedState, setMutedState] = useState<Record<string, boolean>>({
     isounds: true,
@@ -190,26 +191,27 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
               {/* Card Header & Video Stage */}
               <div>
                 {/* Mobile Device Mockup / Video Frame */}
-                <div className="relative aspect-[16/10] sm:aspect-[16/9] bg-slate-900 border-b border-slate-800/80 overflow-hidden group">
-                  <video
-                    ref={(el) => {
-                      videoRefs.current[app.id] = el;
-                    }}
+                <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-slate-950 border-b border-slate-800/80 overflow-hidden group">
+                  <SafariSafeVideo
                     src={app.videoSrc}
                     autoPlay
                     loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
-                    onPlay={() => setPlayingState((prev) => ({ ...prev, [app.id]: true }))}
-                    onPause={() => setPlayingState((prev) => ({ ...prev, [app.id]: false }))}
+                    muted={mutedState[app.id]}
+                    containerClassName="absolute inset-0"
+                    className="object-contain"
+                    externalRef={(el) => {
+                      videoRefs.current[app.id] = el;
+                    }}
+                    onPlayStateChange={(isPlaying) =>
+                      setPlayingState((prev) => ({ ...prev, [app.id]: isPlaying }))
+                    }
                   />
 
                   {/* Video Overlay Controls */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/30 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/25 pointer-events-none" />
 
                   {/* Top Bar on Video: App badge */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-auto">
+                  <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-auto">
                     <span className="text-[11px] font-semibold text-white/90 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 flex items-center gap-1.5">
                       <Smartphone className="w-3 h-3 text-cyan-400" />
                       <span>{app.specs.platform}</span>
@@ -226,7 +228,7 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
                   </div>
 
                   {/* Bottom bar on Video: Play/Pause and Mute Controls */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-auto">
+                  <div className="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-auto">
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => togglePlay(app.id)}

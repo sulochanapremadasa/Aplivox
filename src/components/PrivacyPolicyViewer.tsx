@@ -68,7 +68,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
           <div className="flex items-center gap-3">
             <a
-              href="/"
+              href="./"
               onClick={(e) => {
                 if (onClose) {
                   e.preventDefault();

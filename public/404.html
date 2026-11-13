@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ApliVox</title>
+    <script>
+      (function () {
+        var path = window.location.pathname;
+        var match = path.match(/^(.*)\/privacy(?:\/([^/]+))?\/?$/i);
+        if (match) {
+          var base = match[1] || '';
+          var appId = match[2] || 'isounds';
+          window.location.replace(base + '/?privacy=' + encodeURIComponent(appId));
+        } else {
+          window.location.replace('/');
+        }
+      })();
+    </script>
+  </head>
+  <body style="background:#020617;color:#f1f5f9;"></body>
+</html>

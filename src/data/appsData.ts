@@ -62,7 +62,7 @@ export const APPS_DATA: MobileApp[] = [
     accentBorder: 'border-emerald-500/30 hover:border-emerald-500/60',
     accentBg: 'bg-emerald-500/10',
     accentText: 'text-emerald-400',
-    videoSrc: '/assets/aistudio/iSounds_Promo_video_1ff991e3.mp4',
+    videoSrc: './assets/aistudio/iSounds_Promo_video_1ff991e3.mp4',
     description:
       'A responsive, offline-ready soundboard mobile application delivering over 100 funny and expressive reaction sounds. Built with tap-to-play immediacy, sound search, customizable sound packs, and dark/light themes.',
     highlights: [
@@ -181,7 +181,7 @@ export const APPS_DATA: MobileApp[] = [
     accentBorder: 'border-indigo-500/30 hover:border-indigo-500/60',
     accentBg: 'bg-indigo-500/10',
     accentText: 'text-indigo-400',
-    videoSrc: '/assets/aistudio/HabitBloom_Promo_video_6cc0582d.mp4',
+    videoSrc: './assets/aistudio/HabitBloom_Promo_video_6cc0582d.mp4',
     description:
       'A mindful daily habit tracker engineered to build lasting consistency. Create personalized routines, track streaks, inspect monthly habit matrices, unlock HabitBloom Pro features, and export your personal data at any time.',
     highlights: [
@@ -299,7 +299,7 @@ export const APPS_DATA: MobileApp[] = [
     accentBorder: 'border-cyan-500/30 hover:border-cyan-500/60',
     accentBg: 'bg-cyan-500/10',
     accentText: 'text-cyan-400',
-    videoSrc: '/assets/aistudio/MotorLog_Promo_video_1c8d6bca.mp4',
+    videoSrc: './assets/aistudio/MotorLog_Promo_video_1c8d6bca.mp4',
     description:
       'A comprehensive vehicle garage manager and maintenance history tracker. Log services, oil changes, repairs, odometer readings, and costs, while assigning drivers with license expiry records.',
     highlights: [

@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react';
-import { X, Smartphone, Shield, Play, Pause, Volume2, VolumeX, Mail } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { X, Shield, Mail } from 'lucide-react';
 import { MobileApp } from '../data/appsData';
+import { SafariSafeVideo } from './SafariSafeVideo';
 
 interface VideoModalProps {
   app: MobileApp | null;
@@ -13,8 +14,6 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   onClose,
   onOpenPrivacy,
 }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -44,14 +43,15 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         </button>
 
         {/* Video Column (Left / Main) */}
-        <div className="relative md:w-3/5 bg-black flex items-center justify-center min-h-[320px] md:min-h-[500px]">
-          <video
-            ref={videoRef}
+        <div className="relative md:w-3/5 bg-black flex items-center justify-center min-h-[360px] md:min-h-[500px]">
+          <SafariSafeVideo
             src={app.videoSrc}
             autoPlay
+            loop
+            muted
             controls
-            playsInline
-            className="w-full h-full max-h-[500px] object-contain"
+            containerClassName="absolute inset-0"
+            className="object-contain"
           />
         </div>
 

@@ -24,22 +24,30 @@ export default function App() {
   const syncRouteFromLocation = () => {
     const pathname = window.location.pathname.toLowerCase();
     const hash = window.location.hash.toLowerCase();
+    const searchParams = new URLSearchParams(window.location.search);
+    const queryPrivacy = searchParams.get('privacy')?.toLowerCase();
 
-    // Check pathname: /privacy/habitbloom, /privacy/isounds, /privacy/motorlog
-    if (pathname.startsWith('/privacy')) {
-      const parts = pathname.split('/').filter(Boolean);
-      if (parts.length >= 2) {
-        const subId = parts[1];
-        if (subId === 'habitbloom' || subId === 'isounds' || subId === 'motorlog') {
-          setSelectedPrivacyAppId(subId);
-        } else if (subId === 'corporate' || subId === 'aplivox') {
-          setSelectedPrivacyAppId('aplivox');
-        } else {
-          setSelectedPrivacyAppId('isounds');
-        }
-      } else {
-        setSelectedPrivacyAppId('isounds');
+    const resolveAppId = (id?: string) => {
+      if (id === 'habitbloom' || id === 'isounds' || id === 'motorlog') {
+        return id;
       }
+      if (id === 'corporate' || id === 'aplivox') {
+        return 'aplivox';
+      }
+      return 'isounds';
+    };
+
+    if (queryPrivacy) {
+      setSelectedPrivacyAppId(resolveAppId(queryPrivacy));
+      setCurrentView('privacy');
+      return;
+    }
+
+    // Check pathname: /privacy/habitbloom or /<repo>/privacy/habitbloom
+    const parts = pathname.split('/').filter(Boolean);
+    const privacyIdx = parts.indexOf('privacy');
+    if (privacyIdx !== -1) {
+      setSelectedPrivacyAppId(resolveAppId(parts[privacyIdx + 1]));
       setCurrentView('privacy');
       return;
     }
@@ -47,7 +55,7 @@ export default function App() {
     // Check hash fallback: #privacy-habitbloom, etc.
     if (hash.startsWith('#privacy-')) {
       const appId = hash.replace('#privacy-', '');
-      setSelectedPrivacyAppId(appId);
+      setSelectedPrivacyAppId(resolveAppId(appId));
       setCurrentView('privacy');
       return;
     }
