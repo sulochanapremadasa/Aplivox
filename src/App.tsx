@@ -141,6 +141,7 @@ export default function App() {
           <PrivacyPolicyViewer
             selectedAppId={selectedPrivacyAppId}
             onClose={handleBackToHome}
+            onSelectPolicy={handleSelectPrivacy}
           />
         </main>
       ) : (

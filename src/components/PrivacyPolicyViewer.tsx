@@ -9,6 +9,8 @@ import {
   Search,
   Lock,
   CreditCard,
+  ExternalLink,
+  Globe,
 } from 'lucide-react';
 import {
   MobileApp,
@@ -20,11 +22,16 @@ import {
 interface PrivacyPolicyViewerProps {
   selectedAppId: string;
   onClose?: () => void;
+  onSelectPolicy?: (appId: string) => void;
 }
+
+const TOKEN_REGEX =
+  /(https?:\/\/[^\s)]+|[a-zA-Z0-9._%+-]+@aplivox\.com|reportaproblem\.apple\.com|\baplivox\.com\b)/gi;
 
 export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
   selectedAppId,
   onClose,
+  onSelectPolicy,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedUrl, setCopiedUrl] = useState(false);
@@ -50,6 +57,98 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const renderPolicyText = (text: string) => {
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    const regex = new RegExp(TOKEN_REGEX.source, 'gi');
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(text)) !== null) {
+      const matchStart = match.index;
+      if (matchStart > lastIndex) {
+        parts.push(text.slice(lastIndex, matchStart));
+      }
+
+      let rawToken = match[0];
+      let trailingPunctuation = '';
+      const trailingMatch = rawToken.match(/[.,;:!?]+$/);
+      if (trailingMatch) {
+        trailingPunctuation = trailingMatch[0];
+        rawToken = rawToken.slice(0, -trailingPunctuation.length);
+      }
+
+      const lower = rawToken.toLowerCase();
+
+      if (lower.includes('@')) {
+        parts.push(
+          <a
+            key={`${matchStart}-${rawToken}`}
+            href={`mailto:${rawToken}?subject=${encodeURIComponent(
+              currentPolicy.appName + ' Privacy & Support Inquiry'
+            )}`}
+            className="inline-flex items-baseline gap-1 text-cyan-400 hover:text-cyan-300 underline decoration-cyan-500/45 hover:decoration-cyan-300 underline-offset-4 font-medium transition-colors"
+          >
+            <Mail className="w-3 h-3 self-center shrink-0 opacity-85" aria-hidden="true" />
+            <span>{rawToken}</span>
+          </a>
+        );
+      } else if (lower.startsWith('https://aplivox.com') || lower === 'aplivox.com') {
+        const href = lower.startsWith('http') ? rawToken : `https://${rawToken}`;
+        const privacyMatch = lower.match(/aplivox\.com\/privacy\/(isounds|habitbloom|motorlog)/);
+        const isCorporatePrivacy = lower === 'https://aplivox.com/privacy';
+
+        parts.push(
+          <a
+            key={`${matchStart}-${rawToken}`}
+            href={href}
+            onClick={(e) => {
+              if (privacyMatch && onSelectPolicy) {
+                e.preventDefault();
+                onSelectPolicy(privacyMatch[1]);
+              } else if (isCorporatePrivacy && onSelectPolicy) {
+                e.preventDefault();
+                onSelectPolicy('aplivox');
+              } else if ((lower === 'https://aplivox.com' || lower === 'aplivox.com') && onClose) {
+                e.preventDefault();
+                onClose();
+              }
+            }}
+            className="inline-flex items-baseline gap-1 font-mono text-[13px] text-cyan-300 hover:text-cyan-200 underline decoration-cyan-500/45 hover:decoration-cyan-300 underline-offset-4 font-medium transition-colors break-all"
+          >
+            <Globe className="w-3 h-3 self-center shrink-0 opacity-85" aria-hidden="true" />
+            <span>{rawToken}</span>
+          </a>
+        );
+      } else {
+        const href = lower.startsWith('http') ? rawToken : `https://${rawToken}`;
+        parts.push(
+          <a
+            key={`${matchStart}-${rawToken}`}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-baseline gap-1 text-cyan-400 hover:text-cyan-300 underline decoration-cyan-500/45 hover:decoration-cyan-300 underline-offset-4 font-medium transition-colors break-words"
+          >
+            <span>{rawToken}</span>
+            <ExternalLink className="w-3 h-3 self-center shrink-0 opacity-85" aria-hidden="true" />
+          </a>
+        );
+      }
+
+      if (trailingPunctuation) {
+        parts.push(trailingPunctuation);
+      }
+
+      lastIndex = regex.lastIndex;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push(text.slice(lastIndex));
+    }
+
+    return parts.length > 0 ? parts : text;
   };
 
   // Filter sections by search query
@@ -149,8 +248,19 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
               </div>
               <span aria-hidden="true" className="text-slate-700">·</span>
               <div>
-                <span className="text-slate-400">Entity:</span>{' '}
-                <span className="text-slate-300 font-medium">ApliVox</span>
+                <span className="text-slate-400">Publisher:</span>{' '}
+                <a
+                  href="https://aplivox.com"
+                  onClick={(e) => {
+                    if (onClose) {
+                      e.preventDefault();
+                      onClose();
+                    }
+                  }}
+                  className="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-500/40 underline-offset-4 font-medium transition-colors"
+                >
+                  ApliVox (aplivox.com)
+                </a>
               </div>
             </div>
 
@@ -271,7 +381,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
 
                   <div className="space-y-2.5 text-sm text-slate-300 leading-relaxed pl-3 border-l-2 border-slate-800">
                     {section.content.map((paragraph, pIdx) => (
-                      <p key={pIdx}>{paragraph}</p>
+                      <p key={pIdx}>{renderPolicyText(paragraph)}</p>
                     ))}
                   </div>
                 </div>
@@ -306,12 +416,58 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
               </a>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-2 border-t border-slate-800/80">
-              <span className="font-mono text-cyan-300">support@aplivox.com</span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-400 pt-3 border-t border-slate-800/80">
+              <a
+                href={`mailto:${currentPolicy.contactEmail}?subject=${encodeURIComponent(
+                  currentPolicy.appName + ' Privacy & Support Inquiry'
+                )}`}
+                className="inline-flex items-center gap-1.5 font-mono text-cyan-300 hover:text-cyan-200 underline decoration-cyan-500/40 underline-offset-4 transition-colors"
+              >
+                <Mail className="w-3 h-3" />
+                <span>{currentPolicy.contactEmail}</span>
+              </a>
               <span aria-hidden="true" className="text-slate-700">·</span>
-              <span>Domain: aplivox.com</span>
+              <a
+                href="https://aplivox.com"
+                onClick={(e) => {
+                  if (onClose) {
+                    e.preventDefault();
+                    onClose();
+                  }
+                }}
+                className="inline-flex items-center gap-1.5 text-cyan-300 hover:text-cyan-200 underline decoration-cyan-500/40 underline-offset-4 transition-colors"
+              >
+                <Globe className="w-3 h-3" />
+                <span>aplivox.com</span>
+              </a>
               <span aria-hidden="true" className="text-slate-700">·</span>
-              <span>Direct Developer Response</span>
+              <a
+                href={currentPolicy.canonicalUrl}
+                onClick={(e) => {
+                  if (onSelectPolicy && currentApp) {
+                    e.preventDefault();
+                    onSelectPolicy(currentApp.id);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="inline-flex items-center gap-1.5 font-mono text-cyan-300 hover:text-cyan-200 underline decoration-cyan-500/40 underline-offset-4 transition-colors break-all"
+              >
+                <span>{currentPolicy.canonicalUrl}</span>
+              </a>
+              {selectedAppId === 'isounds' && (
+                <>
+                  <span aria-hidden="true" className="text-slate-700">·</span>
+                  <a
+                    href="https://policies.google.com/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 underline decoration-cyan-500/40 underline-offset-4 transition-colors"
+                  >
+                    <span>Google Privacy Policy</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
