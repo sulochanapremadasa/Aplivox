@@ -185,10 +185,20 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1">
                 <div className="text-[11px] text-slate-400 font-medium">Data Used to Track You</div>
-                <div className="text-xs font-bold text-emerald-400">
+                <div
+                  className={`text-xs font-bold ${
+                    currentPolicy.appStoreNutrition.dataUsedToTrackYou === 'None'
+                      ? 'text-emerald-400'
+                      : 'text-amber-300'
+                  }`}
+                >
                   {currentPolicy.appStoreNutrition.dataUsedToTrackYou}
                 </div>
-                <p className="text-[11px] text-slate-400">Zero cross-app or web tracking</p>
+                <p className="text-[11px] text-slate-400">
+                  {currentPolicy.appStoreNutrition.dataUsedToTrackYou === 'None'
+                    ? 'Zero cross-app or web tracking'
+                    : 'Only with explicit Apple ATT opt-in'}
+                </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1">
@@ -196,7 +206,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
                 <div className="text-xs font-bold text-cyan-400">
                   {currentPolicy.appStoreNutrition.dataLinkedToYou}
                 </div>
-                <p className="text-[11px] text-slate-400">No account required</p>
+                <p className="text-[11px] text-slate-400">No ApliVox account required</p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1">
@@ -204,7 +214,11 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
                 <div className="text-xs font-bold text-white">
                   {currentPolicy.appStoreNutrition.dataCollected}
                 </div>
-                <p className="text-[11px] text-slate-400">Minimal telemetry standard</p>
+                <p className="text-[11px] text-slate-400">
+                  {selectedAppId === 'isounds'
+                    ? 'Google Ads SDK & Apple StoreKit'
+                    : 'Minimal StoreKit & local-first standard'}
+                </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 space-y-1">
