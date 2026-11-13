@@ -99,10 +99,10 @@ export const Hero: React.FC<HeroProps> = ({
 
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-1">
             <div className="text-2xl sm:text-3xl font-extrabold text-cyan-400 font-mono tabular-nums tracking-tight">
-              Zero
+              ATT / GDPR
             </div>
-            <div className="text-xs font-semibold text-slate-300">Third-Party Tracking</div>
-            <div className="text-[12px] text-slate-400">No ad brokers or user profiling</div>
+            <div className="text-xs font-semibold text-slate-300">Transparent Privacy Controls</div>
+            <div className="text-[12px] text-slate-400">Explicit consent &amp; zero data selling</div>
           </div>
 
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-1">
