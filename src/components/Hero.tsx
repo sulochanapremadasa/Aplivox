@@ -86,7 +86,7 @@ export const Hero: React.FC<HeroProps> = ({
               03
             </div>
             <div className="text-xs font-semibold text-slate-300">Flagship Mobile Apps</div>
-            <div className="text-[12px] text-slate-400">iSounds, HabitBloom & MotorLog</div>
+            <div className="text-[12px] text-slate-400">iSounds, MyHabitsBloom & iMotorLog</div>
           </div>
 
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-1">

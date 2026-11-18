@@ -31,13 +31,13 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
   // Video play state tracker for each card (updated from real playback events)
   const [playingState, setPlayingState] = useState<Record<string, boolean>>({
     isounds: false,
-    habitbloom: false,
-    motorlog: false,
+    myhabitsbloom: false,
+    imotorlog: false,
   });
   const [mutedState, setMutedState] = useState<Record<string, boolean>>({
     isounds: true,
-    habitbloom: true,
-    motorlog: true,
+    myhabitsbloom: true,
+    imotorlog: true,
   });
 
   const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});

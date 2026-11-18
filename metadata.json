@@ -1,6 +1,6 @@
 {
   "name": "ApliVox - Modern Software Engineering & Mobile Apps",
-  "description": "ApliVox is a modern software engineering and digital innovation company showcasing flagship mobile applications including iSounds, HabitBloom, and MotorLog with comprehensive privacy policy documentation.",
+  "description": "ApliVox is a modern software engineering and digital innovation company showcasing flagship mobile applications including iSounds, MyHabitsBloom, and iMotorLog with comprehensive privacy policy documentation.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

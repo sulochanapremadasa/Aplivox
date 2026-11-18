@@ -96,7 +96,7 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
         );
       } else if (lower.startsWith('https://aplivox.com') || lower === 'aplivox.com') {
         const href = lower.startsWith('http') ? rawToken : `https://${rawToken}`;
-        const privacyMatch = lower.match(/aplivox\.com\/privacy\/(isounds|habitbloom|motorlog)/);
+        const privacyMatch = lower.match(/aplivox\.com\/privacy\/(isounds|myhabitsbloom|habitbloom|imotorlog|motorlog)/);
         const isCorporatePrivacy = lower === 'https://aplivox.com/privacy';
 
         parts.push(
@@ -106,7 +106,10 @@ export const PrivacyPolicyViewer: React.FC<PrivacyPolicyViewerProps> = ({
             onClick={(e) => {
               if (privacyMatch && onSelectPolicy) {
                 e.preventDefault();
-                onSelectPolicy(privacyMatch[1]);
+                const slug = privacyMatch[1];
+                const normalized =
+                  slug === 'habitbloom' ? 'myhabitsbloom' : slug === 'motorlog' ? 'imotorlog' : slug;
+                onSelectPolicy(normalized);
               } else if (isCorporatePrivacy && onSelectPolicy) {
                 e.preventDefault();
                 onSelectPolicy('aplivox');

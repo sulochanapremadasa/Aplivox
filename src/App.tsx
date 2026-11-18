@@ -28,8 +28,14 @@ export default function App() {
     const queryPrivacy = searchParams.get('privacy')?.toLowerCase();
 
     const resolveAppId = (id?: string) => {
-      if (id === 'habitbloom' || id === 'isounds' || id === 'motorlog') {
-        return id;
+      if (id === 'myhabitsbloom' || id === 'habitbloom') {
+        return 'myhabitsbloom';
+      }
+      if (id === 'imotorlog' || id === 'motorlog') {
+        return 'imotorlog';
+      }
+      if (id === 'isounds') {
+        return 'isounds';
       }
       if (id === 'corporate' || id === 'aplivox') {
         return 'aplivox';
@@ -43,7 +49,7 @@ export default function App() {
       return;
     }
 
-    // Check pathname: /privacy/habitbloom or /<repo>/privacy/habitbloom
+    // Check pathname: /privacy/myhabitsbloom or /<repo>/privacy/myhabitsbloom
     const parts = pathname.split('/').filter(Boolean);
     const privacyIdx = parts.indexOf('privacy');
     if (privacyIdx !== -1) {
@@ -52,7 +58,7 @@ export default function App() {
       return;
     }
 
-    // Check hash fallback: #privacy-habitbloom, etc.
+    // Check hash fallback: #privacy-myhabitsbloom, etc.
     if (hash.startsWith('#privacy-')) {
       const appId = hash.replace('#privacy-', '');
       setSelectedPrivacyAppId(resolveAppId(appId));

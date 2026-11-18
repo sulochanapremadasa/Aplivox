@@ -26,8 +26,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialAppId }) 
   const getSubject = () => {
     if (subjectLine.trim()) return subjectLine.trim();
     if (selectedApp === 'isounds') return 'iSounds Support & Feedback';
-    if (selectedApp === 'habitbloom') return 'HabitBloom Support & Feedback';
-    if (selectedApp === 'motorlog') return 'MotorLog Support & Feedback';
+    if (selectedApp === 'myhabitsbloom') return 'MyHabitsBloom Support & Feedback';
+    if (selectedApp === 'imotorlog') return 'iMotorLog Support & Feedback';
     return 'ApliVox Support Inquiry';
   };
 
@@ -62,7 +62,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialAppId }) 
             Contact Us & Support
           </h2>
           <p className="text-sm sm:text-base text-slate-300">
-            Have questions regarding iSounds, HabitBloom, MotorLog, or our corporate privacy practices? Reach out directly to our engineering support team.
+            Have questions regarding iSounds, MyHabitsBloom, iMotorLog, or our corporate privacy practices? Reach out directly to our engineering support team.
           </p>
         </div>
 
@@ -132,8 +132,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialAppId }) 
                 >
                   <option value="general">All Applications / General Inquiry</option>
                   <option value="isounds">iSounds (Soundboard iOS App)</option>
-                  <option value="habitbloom">HabitBloom (Habit Tracker iOS App)</option>
-                  <option value="motorlog">MotorLog (Garage & Service Tracker iOS App)</option>
+                  <option value="myhabitsbloom">MyHabitsBloom (Habit Tracker iOS App)</option>
+                  <option value="imotorlog">iMotorLog (Garage & Service Tracker iOS App)</option>
                 </select>
               </div>
 
@@ -186,7 +186,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialAppId }) 
             <div className="space-y-1">
               <div className="font-semibold text-white">Apple StoreKit Support</div>
               <p className="text-slate-400 leading-relaxed">
-                Need receipt restoration or subscription management? MotorLog Pro purchases can be restored in Settings.
+                Need receipt restoration or subscription management? iMotorLog Pro purchases can be restored in Settings.
               </p>
             </div>
 
@@ -200,7 +200,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialAppId }) 
             <div className="space-y-1">
               <div className="font-semibold text-white">Feature Requests</div>
               <p className="text-slate-400 leading-relaxed">
-                Have a sound suggestion for iSounds or a habit metric for HabitBloom? We actively build from user feedback.
+                Have a sound suggestion for iSounds or a habit metric for MyHabitsBloom? We actively build from user feedback.
               </p>
             </div>
           </div>

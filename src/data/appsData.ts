@@ -23,7 +23,7 @@ export interface AppPrivacyPolicy {
 }
 
 export interface MobileApp {
-  id: 'isounds' | 'habitbloom' | 'motorlog';
+  id: 'isounds' | 'myhabitsbloom' | 'imotorlog';
   name: string;
   shortName: string;
   tagline: string;
@@ -181,9 +181,9 @@ export const APPS_DATA: MobileApp[] = [
     },
   },
   {
-    id: 'habitbloom',
-    name: 'HabitBloom',
-    shortName: 'HabitBloom',
+    id: 'myhabitsbloom',
+    name: 'MyHabitsBloom',
+    shortName: 'MyHabitsBloom',
     tagline: 'Start small. Stay consistent. Bloom every day.',
     heroHeadline: 'Meet your daily momentum. Better habits. Brighter days.',
     category: 'Health & Lifestyle / Productivity',
@@ -192,13 +192,13 @@ export const APPS_DATA: MobileApp[] = [
     accentBorder: 'border-indigo-500/30 hover:border-indigo-500/60',
     accentBg: 'bg-indigo-500/10',
     accentText: 'text-indigo-400',
-    videoSrc: './assets/aistudio/HabitBloom_Promo_video_6cc0582d.mp4',
+    videoSrc: './assets/aistudio/MyHabitsBloom_Promo_1efefd67.mp4',
     description:
-      'A mindful daily habit tracker engineered to build lasting consistency. Create personalized routines, track streaks, inspect monthly habit matrices, unlock HabitBloom Pro features, and export your personal data at any time.',
+      'A mindful daily habit tracker engineered to build lasting consistency. Create personalized routines, track streaks, inspect monthly habit matrices, unlock MyHabitsBloom Pro features, and export your personal data at any time.',
     highlights: [
       'Single-tap daily habit checkoffs and streak counters',
       'Visual Habit Consistency Matrix with 30-day analytics',
-      'HabitBloom Pro In-App Purchases for unlimited habits & themes',
+      'MyHabitsBloom Pro In-App Purchases for unlimited habits & themes',
       'Configurable push reminders with custom Silent Hours',
       'Complete CSV data export and instant local storage reset',
     ],
@@ -207,20 +207,20 @@ export const APPS_DATA: MobileApp[] = [
     specs: {
       platform: 'iOS 16.0 or later',
       currentVersion: 'Version 1.2.0',
-      pricing: 'Free with HabitBloom Pro In-App Purchases',
+      pricing: 'Free with MyHabitsBloom Pro In-App Purchases',
       storageMode: 'Local Encrypted SQLite / CoreData',
       internetRequired: 'No (Offline-first architecture; network only for App Store purchases)',
       ageRating: 'Rated 4+ (All ages)',
     },
     privacyPolicy: {
-      appName: 'HabitBloom',
-      appIdentifier: 'com.aplivox.habitbloom',
-      path: '/privacy/habitbloom',
-      canonicalUrl: 'https://aplivox.com/privacy/habitbloom',
+      appName: 'MyHabitsBloom',
+      appIdentifier: 'com.aplivox.myhabitsbloom',
+      path: '/privacy/myhabitsbloom',
+      canonicalUrl: 'https://aplivox.com/privacy/myhabitsbloom',
       effectiveDate: 'November 1, 2026',
-      lastUpdated: 'November 12, 2026',
+      lastUpdated: 'November 18, 2026',
       summary:
-        'HabitBloom is dedicated to protecting your personal routines and wellness data. All habits, schedules, logs, and streak metrics are stored strictly on your local device. We never sell, monetize, or transmit your habit data. Optional HabitBloom Pro In-App Purchases are processed through Apple StoreKit with zero access to your billing instruments.',
+        'MyHabitsBloom is dedicated to protecting your personal routines and wellness data. All habits, schedules, logs, and streak metrics are stored strictly on your local device. We never sell, monetize, or transmit your habit data. Optional MyHabitsBloom Pro In-App Purchases are processed through Apple StoreKit with zero access to your billing instruments.',
       contactEmail: 'support@aplivox.com',
       appStoreNutrition: {
         dataCollected: 'In-App Purchase History (processed via Apple StoreKit for Pro feature unlocks)',
@@ -234,7 +234,7 @@ export const APPS_DATA: MobileApp[] = [
           title: '1. Introduction & Philosophy',
           content: [
             'Habits are deeply personal. When you record your meditation, medication, sleep schedule, or fitness routines, that information belongs solely to you.',
-            'ApliVox operates HabitBloom under an "Offline-First, Privacy-First" standard. We do not require account registration, social login, or cloud syncing to use core features.',
+            'ApliVox operates MyHabitsBloom under an "Offline-First, Privacy-First" standard. We do not require account registration, social login, or cloud syncing to use core features.',
             'Your routines, streak records, and completion matrices remain strictly inside your device sandbox.',
           ],
         },
@@ -244,17 +244,17 @@ export const APPS_DATA: MobileApp[] = [
           content: [
             'On-Device Storage: All habit titles, target frequencies, completion timestamps, streaks, and custom notes are stored in a sandboxed database directly on your iOS device.',
             'No Cloud Mirroring: ApliVox does not maintain remote servers that store or profile your daily habits.',
-            'Backup: If you enable iOS iCloud device backups, your HabitBloom data is backed up within your personal, encrypted Apple iCloud account governed by Apple’s security protocols.',
+            'Backup: If you enable iOS iCloud device backups, your MyHabitsBloom data is backed up within your personal, encrypted Apple iCloud account governed by Apple’s security protocols.',
           ],
         },
         {
           id: 'in-app-purchases',
-          title: '3. In-App Purchases & HabitBloom Pro Subscriptions',
+          title: '3. In-App Purchases & MyHabitsBloom Pro Subscriptions',
           content: [
-            'HabitBloom Pro Features: HabitBloom offers optional In-App Purchases, including HabitBloom Pro auto-renewable subscriptions (monthly or annual) and one-time lifetime unlock licenses that enable unlimited active routines, custom icons and color palettes, and advanced 30-day analytics.',
+            'MyHabitsBloom Pro Features: MyHabitsBloom offers optional In-App Purchases, including MyHabitsBloom Pro auto-renewable subscriptions (monthly or annual) and one-time lifetime unlock licenses that enable unlimited active routines, custom icons and color palettes, and advanced 30-day analytics.',
             'Secure Payment Execution by Apple: All transactions and billing cycles are processed exclusively through Apple StoreKit. ApliVox never has access to your banking information, payment card numbers, billing addresses, or Apple ID credentials.',
             'Subscription Management & Auto-Renewal: Auto-renewable subscriptions automatically renew unless canceled at least 24 hours before the end of the current billing cycle. You can manage or cancel your subscription at any time in your iOS Apple ID Account Settings (Settings > [Your Name] > Subscriptions).',
-            'Restore Purchases: You can restore your HabitBloom Pro access at any time across all your personal iOS devices signed into your Apple ID via Settings > Restore Purchases without incurring additional charges.',
+            'Restore Purchases: You can restore your MyHabitsBloom Pro access at any time across all your personal iOS devices signed into your Apple ID via Settings > Restore Purchases without incurring additional charges.',
             'Separation of Purchases from Personal Habits: Your purchase receipt is validated strictly to unlock Pro capabilities; your actual habits and completion logs are never linked to your Apple ID purchase records or transmitted to third parties.',
           ],
         },
@@ -262,7 +262,7 @@ export const APPS_DATA: MobileApp[] = [
           id: 'notifications',
           title: '4. Device Notifications & Silent Hours',
           content: [
-            'HabitBloom allows you to set daily reminders for your routines.',
+            'MyHabitsBloom allows you to set daily reminders for your routines.',
             'Local Push Notifications: All reminders are scheduled locally on the device using Apple’s UserNotifications framework. No external remote push notification servers are used to trigger your reminders.',
             'Silent Hours: You can configure quiet hours during which no alerts will be generated.',
             'You may revoke notification permissions at any time through your iOS Settings.',
@@ -272,7 +272,7 @@ export const APPS_DATA: MobileApp[] = [
           id: 'data-ownership',
           title: '5. Data Ownership, Export (CSV) & Deletion',
           content: [
-            'Export Data: HabitBloom includes a built-in "Export Data (CSV)" tool allowing you to export your complete habit logs at any time.',
+            'Export Data: MyHabitsBloom includes a built-in "Export Data (CSV)" tool allowing you to export your complete habit logs at any time.',
             'Clear Local Storage: You can permanently erase all stored habits, history, and preferences from your device directly via Settings > Clear Local Storage.',
             'Uninstalling the app also purges all locally stored app sandbox data immediately.',
           ],
@@ -281,7 +281,7 @@ export const APPS_DATA: MobileApp[] = [
           id: 'analytics',
           title: '6. Analytics & Diagnostics',
           content: [
-            'HabitBloom does not use third-party user behavioral tracking SDKs (no Facebook Pixel, no Google Firebase Analytics, no Mixpanel).',
+            'MyHabitsBloom does not use third-party user behavioral tracking SDKs (no Facebook Pixel, no Google Firebase Analytics, no Mixpanel).',
             'Only crash reports explicitly opted into by the user via Apple TestFlight or iOS Diagnostics are collected in aggregate by Apple and shared with developers.',
           ],
         },
@@ -293,16 +293,16 @@ export const APPS_DATA: MobileApp[] = [
             'Email: support@aplivox.com',
             'Organization: ApliVox Digital Innovation',
             'Website: https://aplivox.com',
-            'Canonical Privacy URL: https://aplivox.com/privacy/habitbloom',
+            'Canonical Privacy URL: https://aplivox.com/privacy/myhabitsbloom',
           ],
         },
       ],
     },
   },
   {
-    id: 'motorlog',
-    name: 'MotorLog',
-    shortName: 'MotorLog',
+    id: 'imotorlog',
+    name: 'iMotorLog',
+    shortName: 'iMotorLog',
     tagline: 'Your vehicle story. Beautifully kept.',
     heroHeadline: 'Care for every journey. Keep your garage organized.',
     category: 'Auto & Vehicles / Fleet & Utilities',
@@ -311,14 +311,14 @@ export const APPS_DATA: MobileApp[] = [
     accentBorder: 'border-cyan-500/30 hover:border-cyan-500/60',
     accentBg: 'bg-cyan-500/10',
     accentText: 'text-cyan-400',
-    videoSrc: './assets/aistudio/MotorLog_Promo_video_1c8d6bca.mp4',
+    videoSrc: './assets/aistudio/iMotorLog_Promo_4d6ae76d.mp4',
     description:
       'A comprehensive vehicle garage manager and maintenance history tracker. Log services, oil changes, repairs, odometer readings, and costs, while assigning drivers with license expiry records.',
     highlights: [
       'Multi-vehicle digital garage with photos, plates, and VIN records',
       'Complete maintenance timeline with costs, receipts, and odometer readings',
       'Assigned driver management with license expiration alerts',
-      'MotorLog Pro subscription & restore purchases via StoreKit',
+      'iMotorLog Pro subscription & restore purchases via StoreKit',
       'Dark & Light appearance tailored for day or night garage inspections',
     ],
     privacyHighlight:
@@ -326,23 +326,23 @@ export const APPS_DATA: MobileApp[] = [
     specs: {
       platform: 'iOS 16.0 or later',
       currentVersion: 'Version 1.0.0',
-      pricing: 'Free with MotorLog Pro Tier',
+      pricing: 'Free with iMotorLog Pro Tier',
       storageMode: 'On-Device Vehicle Database',
       internetRequired: 'Optional (Receipt sync & StoreKit purchase validation)',
       ageRating: 'Rated 4+ (Drivers & Fleet Owners)',
     },
     privacyPolicy: {
-      appName: 'MotorLog',
-      appIdentifier: 'com.aplivox.motorlog',
-      path: '/privacy/motorlog',
-      canonicalUrl: 'https://aplivox.com/privacy/motorlog',
+      appName: 'iMotorLog',
+      appIdentifier: 'com.aplivox.imotorlog',
+      path: '/privacy/imotorlog',
+      canonicalUrl: 'https://aplivox.com/privacy/imotorlog',
       effectiveDate: 'November 1, 2026',
-      lastUpdated: 'November 12, 2026',
+      lastUpdated: 'November 18, 2026',
       summary:
-        'MotorLog values the confidentiality of your vehicle fleet and maintenance records. Your vehicle photos, license plates, chassis numbers, odometer milestones, service receipts, and driver licenses are stored securely on your device. We do not sell vehicle data or share your logs with insurance providers or advertising brokers.',
+        'iMotorLog values the confidentiality of your vehicle fleet and maintenance records. Your vehicle photos, license plates, chassis numbers, odometer milestones, service receipts, and driver licenses are stored securely on your device. We do not sell vehicle data or share your logs with insurance providers or advertising brokers.',
       contactEmail: 'support@aplivox.com',
       appStoreNutrition: {
-        dataCollected: 'In-App Purchase Records (processed via Apple StoreKit for MotorLog Pro)',
+        dataCollected: 'In-App Purchase Records (processed via Apple StoreKit for iMotorLog Pro)',
         dataLinkedToYou: 'In-App Purchase history (processed by Apple StoreKit, not linked to garage records)',
         dataUsedToTrackYou: 'None',
         onDeviceStorage: 'Vehicles, maintenance records, driver details, odometer readings',
@@ -352,8 +352,8 @@ export const APPS_DATA: MobileApp[] = [
           id: 'introduction',
           title: '1. Introduction',
           content: [
-            'MotorLog was created by ApliVox to help drivers and vehicle enthusiasts meticulously maintain their vehicles without forfeiting their privacy.',
-            'This Privacy Policy describes how MotorLog handles data including vehicle specifications, service records, and driver assignments.',
+            'iMotorLog was created by ApliVox to help drivers and vehicle enthusiasts meticulously maintain their vehicles without forfeiting their privacy.',
+            'This Privacy Policy describes how iMotorLog handles data including vehicle specifications, service records, and driver assignments.',
           ],
         },
         {
@@ -370,16 +370,16 @@ export const APPS_DATA: MobileApp[] = [
           id: 'camera-photos',
           title: '3. Camera and Photo Library Access',
           content: [
-            'MotorLog allows you to attach photos of your vehicles and maintenance receipts.',
+            'iMotorLog allows you to attach photos of your vehicles and maintenance receipts.',
             'Photo access is requested solely to let you choose or capture an image.',
             'Vehicle photos and receipt images are stored exclusively in the app’s local directory and are not uploaded to our servers.',
           ],
         },
         {
           id: 'in-app-purchases',
-          title: '4. In-App Purchases & MotorLog Pro (Apple StoreKit)',
+          title: '4. In-App Purchases & iMotorLog Pro (Apple StoreKit)',
           content: [
-            'MotorLog offers an optional MotorLog Pro subscription and lifetime license that unlocks unlimited vehicles and advanced service records.',
+            'iMotorLog offers an optional iMotorLog Pro subscription and lifetime license that unlocks unlimited vehicles and advanced service records.',
             'All payment processing is handled strictly by Apple Inc. via Apple StoreKit. ApliVox does not collect, receive, or store your credit card numbers, billing addresses, or payment credentials.',
             'Subscriptions can be canceled at any time in Apple ID Account Settings.',
             'You can restore previously purchased Pro licenses using the "Restore Purchases" button in Settings.',
@@ -389,7 +389,7 @@ export const APPS_DATA: MobileApp[] = [
           id: 'erase-data',
           title: '5. Data Erasure & Control',
           content: [
-            'MotorLog provides an explicit "Erase all data" action inside Settings > Data.',
+            'iMotorLog provides an explicit "Erase all data" action inside Settings > Data.',
             'Tapping this action permanently wipes all vehicles, drivers, records, receipts, and photos stored on the device.',
           ],
         },
@@ -401,7 +401,7 @@ export const APPS_DATA: MobileApp[] = [
             'Email: support@aplivox.com',
             'Organization: ApliVox Engineering Studio',
             'Website: https://aplivox.com',
-            'Canonical Privacy URL: https://aplivox.com/privacy/motorlog',
+            'Canonical Privacy URL: https://aplivox.com/privacy/imotorlog',
           ],
         },
       ],
@@ -483,7 +483,7 @@ export const CORPORATE_PRIVACY_POLICY: AppPrivacyPolicy = {
       title: '3. Customer Support Inquiries',
       content: [
         'When you contact our support desk via support@aplivox.com, we receive your email address, message body, and any attachments you provide.',
-        'We use this information exclusively to resolve your support inquiry or troubleshoot technical issues with iSounds, HabitBloom, or MotorLog.',
+        'We use this information exclusively to resolve your support inquiry or troubleshoot technical issues with iSounds, MyHabitsBloom, or iMotorLog.',
         'We never sell your email address to mailing lists or marketing aggregators.',
       ],
     },
@@ -493,8 +493,8 @@ export const CORPORATE_PRIVACY_POLICY: AppPrivacyPolicy = {
       content: [
         'Each mobile application developed by ApliVox maintains its own dedicated privacy policy reflecting its technical architecture:',
         '• iSounds (https://aplivox.com/privacy/isounds): On-device soundboard featuring Google Ads (AdMob) with ATT/GDPR consent controls, Apple StoreKit in-app purchases, and zero audio recording.',
-        '• HabitBloom (https://aplivox.com/privacy/habitbloom): Offline-first mindful habit tracker with HabitBloom Pro StoreKit subscriptions, local storage, and CSV export.',
-        '• MotorLog (https://aplivox.com/privacy/motorlog): Vehicle garage and maintenance tracker with sandboxed device logs and MotorLog Pro StoreKit subscriptions.',
+        '• MyHabitsBloom (https://aplivox.com/privacy/myhabitsbloom): Offline-first mindful habit tracker with MyHabitsBloom Pro StoreKit subscriptions, local storage, and CSV export.',
+        '• iMotorLog (https://aplivox.com/privacy/imotorlog): Vehicle garage and maintenance tracker with sandboxed device logs and iMotorLog Pro StoreKit subscriptions.',
       ],
     },
     {
