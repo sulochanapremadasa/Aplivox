@@ -60,14 +60,6 @@ export const Footer: React.FC<FooterProps> = ({
                   </button>
                 </li>
               ))}
-              <li>
-                <button
-                  onClick={() => onScrollToSection('apps-showcase')}
-                  className="hover:text-cyan-400 transition-colors text-left text-slate-400"
-                >
-                  Horizontal Showcase
-                </button>
-              </li>
             </ul>
           </div>
 

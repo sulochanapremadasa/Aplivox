@@ -5,8 +5,6 @@ import {
   Shield,
   Play,
   Pause,
-  Volume2,
-  VolumeX,
   Maximize2,
   CheckCircle2,
   Clock,
@@ -33,11 +31,6 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
     isounds: false,
     myhabitsbloom: false,
     imotorlog: false,
-  });
-  const [mutedState, setMutedState] = useState<Record<string, boolean>>({
-    isounds: true,
-    myhabitsbloom: true,
-    imotorlog: true,
   });
 
   const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
@@ -103,24 +96,14 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
     }
   };
 
-  const toggleMute = (appId: string) => {
-    const video = videoRefs.current[appId];
-    if (video) {
-      video.muted = !video.muted;
-      setMutedState((prev) => ({ ...prev, [appId]: video.muted }));
-    }
-  };
-
   return (
     <section id="apps-showcase" className="py-20 bg-slate-900/60 border-y border-slate-800/80 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div className="space-y-3 max-w-2xl">
-            <div className="flex items-center gap-2 text-xs font-semibold text-cyan-400 uppercase tracking-wider">
+            <div className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
               <span>Mobile Application Portfolio</span>
-              <span aria-hidden="true" className="text-slate-600">·</span>
-              <span>Horizontal Scroll View</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               Featured Mobile Applications
@@ -196,7 +179,7 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
                     src={app.videoSrc}
                     autoPlay
                     loop
-                    muted={mutedState[app.id]}
+                    muted
                     containerClassName="absolute inset-0"
                     className="object-contain"
                     externalRef={(el) => {
@@ -233,36 +216,19 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
                     </button>
                   </div>
 
-                  {/* Bottom bar on Video: Play/Pause and Mute Controls */}
-                  <div className="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-auto">
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => togglePlay(app.id)}
-                        className="w-8 h-8 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-md border border-white/10 transition-colors"
-                        aria-label={playingState[app.id] ? 'Pause video' : 'Play video'}
-                      >
-                        {playingState[app.id] ? (
-                          <Pause className="w-3.5 h-3.5" />
-                        ) : (
-                          <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-                        )}
-                      </button>
-                      <button
-                        onClick={() => toggleMute(app.id)}
-                        className="w-8 h-8 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-md border border-white/10 transition-colors"
-                        aria-label={mutedState[app.id] ? 'Unmute video' : 'Mute video'}
-                      >
-                        {mutedState[app.id] ? (
-                          <VolumeX className="w-3.5 h-3.5" />
-                        ) : (
-                          <Volume2 className="w-3.5 h-3.5" />
-                        )}
-                      </button>
-                    </div>
-
-                    <span className="text-[11px] font-mono text-white/80 bg-black/60 px-2 py-0.5 rounded backdrop-blur-md">
-                      Promo Clip
-                    </span>
+                  {/* Bottom bar on Video: Play/Pause Control */}
+                  <div className="absolute bottom-3 left-3 right-3 z-20 flex items-center pointer-events-auto">
+                    <button
+                      onClick={() => togglePlay(app.id)}
+                      className="w-8 h-8 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-md border border-white/10 transition-colors"
+                      aria-label={playingState[app.id] ? 'Pause video' : 'Play video'}
+                    >
+                      {playingState[app.id] ? (
+                        <Pause className="w-3.5 h-3.5" />
+                      ) : (
+                        <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+                      )}
+                    </button>
                   </div>
                 </div>
 
