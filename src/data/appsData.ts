@@ -35,6 +35,7 @@ export interface MobileApp {
   accentBg: string;
   accentText: string;
   videoSrc: string;
+  appStoreUrl?: string;
   description: string;
   highlights: string[];
   privacyHighlight: string;
@@ -63,6 +64,7 @@ export const APPS_DATA: MobileApp[] = [
     accentBg: 'bg-emerald-500/10',
     accentText: 'text-emerald-400',
     videoSrc: './assets/aistudio/iSounds_Promo_video_1ff991e3.mp4',
+    appStoreUrl: 'https://apps.apple.com/us/app/isounds-prank/id6836133381',
     description:
       'A responsive, offline-ready soundboard mobile application delivering over 100 funny and expressive reaction sounds. Built with tap-to-play immediacy, sound search, customizable sound packs, and dark/light themes.',
     highlights: [
@@ -193,6 +195,7 @@ export const APPS_DATA: MobileApp[] = [
     accentBg: 'bg-indigo-500/10',
     accentText: 'text-indigo-400',
     videoSrc: './assets/aistudio/MyHabitsBloom_Promo_1efefd67.mp4',
+    appStoreUrl: 'https://apps.apple.com/us/app/myhabitsbloom/id6836220290',
     description:
       'A mindful daily habit tracker engineered to build lasting consistency. Create personalized routines, track streaks, inspect monthly habit matrices, unlock MyHabitsBloom Pro features, and export your personal data at any time.',
     highlights: [
