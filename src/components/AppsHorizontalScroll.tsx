@@ -193,19 +193,8 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
                   {/* Video Overlay Controls */}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/25 pointer-events-none" />
 
-                  {/* Top Bar on Video: App badge */}
-                  <div
-                    className={`absolute top-3 left-3 right-3 z-20 flex items-center pointer-events-auto ${
-                      app.appStoreUrl ? 'justify-end' : 'justify-between'
-                    }`}
-                  >
-                    {!app.appStoreUrl && (
-                      <span className="text-[11px] font-bold tracking-wide text-cyan-300 bg-slate-950/90 backdrop-blur-md px-2.5 py-1 rounded-md border border-cyan-400/70 shadow-lg shadow-black/50 flex items-center gap-1.5">
-                        <Clock className="w-3 h-3 text-cyan-300 shrink-0" />
-                        <span>Available Soon</span>
-                      </span>
-                    )}
-
+                  {/* Top Bar on Video: Expand Video button */}
+                  <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-end pointer-events-auto">
                     <button
                       onClick={() => onOpenVideoModal(app)}
                       className="text-[11px] font-medium text-white/90 bg-black/60 hover:bg-black/90 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 flex items-center gap-1.5 transition-colors"
@@ -282,15 +271,15 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
                 </div>
               </div>
 
-              {/* CARD FOOTER: App Store Download Now (when available) + Privacy Policy link */}
+              {/* CARD FOOTER: App Store Download Now (or Available Soon) + Privacy Policy link */}
               <div className="p-6 pt-0 space-y-2.5">
-                {app.appStoreUrl && (
+                {app.appStoreUrl ? (
                   <a
                     href={app.appStoreUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Download ${app.name} on the App Store`}
-                    className="w-full flex items-center justify-center px-4 py-2.5 rounded-xl bg-black hover:bg-zinc-900 border border-white/25 hover:border-white/60 text-white transition-all shadow-lg shadow-black/50 active:scale-[0.99]"
+                    className="w-full h-14 flex items-center justify-center px-4 rounded-xl bg-black hover:bg-zinc-900 border border-white/25 hover:border-white/60 text-white transition-all shadow-lg shadow-black/50 active:scale-[0.99]"
                   >
                     <span className="flex items-center gap-3">
                       <svg
@@ -310,6 +299,16 @@ export const AppsHorizontalScroll: React.FC<AppsHorizontalScrollProps> = ({
                       </span>
                     </span>
                   </a>
+                ) : (
+                  <div
+                    aria-label={`${app.name} Available Soon`}
+                    className="w-full h-14 flex items-center justify-center gap-2.5 px-4 rounded-xl bg-slate-900/90 border border-cyan-400/50 text-cyan-300 shadow-lg shadow-black/30 select-none"
+                  >
+                    <Clock className="w-4 h-4 text-cyan-300 shrink-0" />
+                    <span className="text-sm font-bold tracking-wide">
+                      Available Soon
+                    </span>
+                  </div>
                 )}
 
                 <a
